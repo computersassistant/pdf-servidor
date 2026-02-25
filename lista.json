@@ -1,14 +1,18 @@
 [
   {
     "titulo": "Abril 2025",
+    "imagen": "https://raw.githubusercontent.com/computersassistant/pdf-servidor/main/imagenes/Abril_2025.png",
     "url": "https://raw.githubusercontent.com/computersassistant/pdf-servidor/main/Ahi-Viene-Cascarrabias-Abril-2025.pdf"
   },
   {
     "titulo": "Febrero 2025",
+    "imagen": "https://raw.githubusercontent.com/computersassistant/pdf-servidor/main/imagenes/Febrero_2025.png",
     "url": "https://raw.githubusercontent.com/computersassistant/pdf-servidor/main/Ahi-Viene-Cascarrabias-Febrero-2025.pdf"
   },
   {
     "titulo": "Mayo 2025",
+    "imagen": "https://raw.githubusercontent.com/computersassistant/pdf-servidor/main/imagenes/Mayo_2025.png",
     "url": "https://raw.githubusercontent.com/computersassistant/pdf-servidor/main/Ahi-Viene-Cascarrabias-Mayo-2025.pdf"
   }
 ]
+
