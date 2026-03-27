@@ -1,4 +1,22 @@
 [
+ {
+    "titulo": "Febrero 2026",
+    "imagen": "https://raw.githubusercontent.com/computersassistant/pdf-servidor/main/imagenes/Febrero_2026.png",
+    "url": "https://raw.githubusercontent.com/computersassistant/pdf-servidor/main/Cascarrabias-Febrero-2026.pdf",
+    "anio":2026
+  },
+   {
+    "titulo": "Octubre 2025",
+    "imagen": "https://raw.githubusercontent.com/computersassistant/pdf-servidor/main/imagenes/Octubre_2025.png",
+    "url": "https://raw.githubusercontent.com/computersassistant/pdf-servidor/main/Octubre-Cascarrabias-2025.pdf",
+    "anio":2025
+  },
+ {
+    "titulo": "Diciembre 2025",
+    "imagen": "https://raw.githubusercontent.com/computersassistant/pdf-servidor/main/imagenes/Diciembre_2025.png",
+    "url": "https://raw.githubusercontent.com/computersassistant/pdf-servidor/main/Diciembre-Cascarrabias-2025.pdf",
+    "anio":2025
+  },
   {
     "titulo": "Febrero 2025",
     "imagen": "https://raw.githubusercontent.com/computersassistant/pdf-servidor/main/imagenes/Febrero_2025.png",
