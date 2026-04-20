@@ -16,6 +16,7 @@
     "anio":2026,
    "mesInicio": 1
   },
+  
    {
     "titulo": "Octubre 2025",
     "titulo_en": "October 2025",
@@ -81,7 +82,7 @@
     "url": "https://raw.githubusercontent.com/computersassistant/pdf-servidor/main/Ahi-Viene-Cascarrabias-Oct_2024.pdf",
     "anio":2024,
     "titulo_en": "October 2024",
-    "mesInicio": 10,
+    "mesInicio": 10
   },
   {
     "titulo": "Diciembre 2024",
