@@ -73,7 +73,7 @@
     "imagen": "https://raw.githubusercontent.com/computersassistant/pdf-servidor/main/imagenes/Edition-March_2024.png",
     "url": "https://raw.githubusercontent.com/computersassistant/pdf-servidor/main/Ahi-Viene-Cascarrabias-Neurodiversity-Edition-March_2024.pdf",
     "anio":2024,
-    "mesInicio": 3,
+    "mesInicio": 3
   },
   {
     "titulo": "Octubre 2024",
@@ -129,7 +129,7 @@
     "titulo": "Sep-Oct 2023",
     "imagen": "https://raw.githubusercontent.com/computersassistant/pdf-servidor/main/imagenes/SepOct_2023.png",
     "url": "https://raw.githubusercontent.com/computersassistant/pdf-servidor/main/Ahi-Viene-Cascarrabias-SepOct_2023.pdf",
-    "anio":2023
+    "anio":2023,
      "titulo_en": "September & October 2023",
     "mesInicio": 9
   },
@@ -185,7 +185,7 @@
   "titulo": "Noviembre 2022",
   "imagen": "https://raw.githubusercontent.com/computersassistant/pdf-servidor/main/imagenes/Noviembre_2022.png",
   "url": "https://raw.githubusercontent.com/computersassistant/pdf-servidor/main/Cascarrabias-Noviembre-2022.pdf",
-  "anio":2022
+  "anio":2022,
   "titulo_en": "November 2022",
   "mesInicio": 11
 },
