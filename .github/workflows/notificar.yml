@@ -1,20 +1,59 @@
-name: Enviar Notificacion Firebase
+name: Automatizacion Cascarrabias
 on:
   push:
-    branches:
-      - principal  # Tu rama se llama 'principal' según vi en tu video
+    paths:
+      - 'lista.json' # Se activa SOLO cuando cambias la lista
 
 jobs:
-  build:
+  notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout del codigo
+      - name: Checkout del código
         uses: actions/checkout@v3
 
-      - name: Enviar Push a Firebase
-        uses: ethanniser/fcm-action@v1
+      - name: Configurar Python
+        uses: actions/setup-python@v4
         with:
-          service-account: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
-          topic: todos  # Esto envía a todos los que estén suscritos al tema "todos"
-          title: "¡Nuevo contenido!"
-          body: "Se ha actualizado el servidor de PDF. ¡Revisa los nuevos archivos!"
+          python-version: '3.x'
+
+      - name: Instalar dependencias de Firebase
+        run: pip install firebase-admin
+
+      - name: Leer JSON y enviar notificación
+        env:
+          FIREBASE_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          python -c "
+          import json, os
+          import firebase_admin
+          from firebase_admin import credentials, messaging
+
+          # 1. Configurar Firebase con el secreto de GitHub
+          key_dict = json.loads(os.environ['FIREBASE_KEY'])
+          cred = credentials.Certificate(key_dict)
+          firebase_admin.initialize_app(cred)
+
+          # 2. Leer tu lista.json
+          with open('lista.json', 'r', encoding='utf-8') as f:
+              datos = json.load(f)
+              # Si tu JSON es una lista [{}, {}], tomamos el último elemento
+              ultimo = datos[-1] if isinstance(datos, list) else datos
+
+          # 3. Extraer los datos exactos que me pasaste
+          titulo_notificacion = ultimo.get('titulo', 'Nuevo PDF disponible')
+          url_imagen = ultimo.get('imagen', '')
+
+          # 4. Crear el mensaje para el tema 'todos'
+          message = messaging.Message(
+              notification=messaging.Notification(
+                  title=f'¡Ya disponible: {titulo_notificacion}!',
+                  body='Toca para leer el nuevo ejemplar de Cascarrabias.',
+                  image=url_imagen
+              ),
+              topic='todos'
+          )
+
+          # 5. Enviar
+          response = messaging.send(message)
+          print('Éxito: Notificación enviada para', titulo_notificacion)
+          "
