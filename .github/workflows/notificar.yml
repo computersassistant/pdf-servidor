@@ -1,0 +1,20 @@
+name: Enviar Notificacion Firebase
+on:
+  push:
+    branches:
+      - principal  # Tu rama se llama 'principal' según vi en tu video
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del codigo
+        uses: actions/checkout@v3
+
+      - name: Enviar Push a Firebase
+        uses: ethanniser/fcm-action@v1
+        with:
+          service-account: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+          topic: todos  # Esto envía a todos los que estén suscritos al tema "todos"
+          title: "¡Nuevo contenido!"
+          body: "Se ha actualizado el servidor de PDF. ¡Revisa los nuevos archivos!"
