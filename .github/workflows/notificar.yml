@@ -1,0 +1,119 @@
+name: Notificar nueva publicación
+
+on:
+  push:
+    paths:
+      - 'lista.json'
+    branches:
+      - main
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar dependencias
+        run: npm install firebase-admin
+
+      - name: Crear archivo de credenciales
+        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}' > serviceAccountKey.json
+
+      - name: Enviar notificación
+        run: |
+          cat > notificar.js <<'EOF'
+          const fs = require('fs');
+          const admin = require('firebase-admin');
+
+          const serviceAccount = require('./serviceAccountKey.json');
+
+          admin.initializeApp({
+            credential: admin.credential.cert(serviceAccount),
+          });
+
+          const raw = fs.readFileSync('./lista.json', 'utf8');
+          const publicaciones = JSON.parse(raw);
+
+          if (!Array.isArray(publicaciones) || publicaciones.length === 0) {
+            throw new Error('lista.json está vacío o no es un arreglo válido');
+          }
+
+          const ordenMes = {
+            enero: 1,
+            febrero: 2,
+            marzo: 3,
+            abril: 4,
+            mayo: 5,
+            junio: 6,
+            julio: 7,
+            agosto: 8,
+            septiembre: 9,
+            octubre: 10,
+            noviembre: 11,
+            diciembre: 12
+          };
+
+          const publicacionesOrdenadas = [...publicaciones].sort((a, b) => {
+            const anioA = parseInt(a.anio || 0, 10);
+            const anioB = parseInt(b.anio || 0, 10);
+
+            if (anioA !== anioB) return anioB - anioA;
+
+            const mesA = ordenMes[(a.mesInicio || '').toLowerCase()] || 0;
+            const mesB = ordenMes[(b.mesInicio || '').toLowerCase()] || 0;
+
+            return mesB - mesA;
+          });
+
+          const ultima = publicacionesOrdenadas[0];
+
+          const titulo =
+            ultima.titulo || 'Nueva publicación disponible';
+
+          const mensaje = 'Ya puedes verla en la app Cascarrabias';
+
+          async function enviar() {
+            const response = await admin.messaging().send({
+              topic: 'todos',
+              notification: {
+                title: titulo,
+                body: mensaje,
+              },
+              data: {
+                titulo: String(ultima.titulo || ''),
+                titulo_en: String(ultima.titulo_en || ''),
+                url: String(ultima.url || ''),
+                anio: String(ultima.anio || ''),
+                mesInicio: String(ultima.mesInicio || ''),
+                click_action: 'FLUTTER_NOTIFICATION_CLICK'
+              },
+              android: {
+                priority: 'high',
+                notification: {
+                  sound: 'default',
+                  channelId: 'default_channel'
+                }
+              }
+            });
+
+            console.log('Notificación enviada:', response);
+          }
+
+          enviar().catch((error) => {
+            console.error('Error enviando notificación:', error);
+            process.exit(1);
+          });
+          EOF
+
+          node notificar.js
+
+      - name: Borrar credenciales temporales
+        if: always()
+        run: rm -f serviceAccountKey.json notificar.js
