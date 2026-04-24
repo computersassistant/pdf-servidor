@@ -81,7 +81,7 @@ jobs:
 
           async function enviar() {
             const response = await admin.messaging().send({
-              topic: 'todos',
+              topic: 'publicaciones',
               notification: {
                 title: titulo,
                 body: mensaje,
